@@ -38,7 +38,7 @@
                     <tbody>
                     <% for (Post post : Store.instOf().findAllPosts()) { %>
                     <tr>
-                        <td><%= post %></td>
+                        <td><%= post.getName() %></td>
                     </tr>
                     <% } %>
                     </tbody>
