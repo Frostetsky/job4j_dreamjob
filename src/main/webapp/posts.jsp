@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page import="store.Store" %>
 <%@ page import="model.Post" %>
+<%@ page import="model.Candidate" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -36,7 +37,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <% for (Post post : Store.instOf().findAll()) { %>
+                    <% for (Post post : Store.instOf().findAllPosts()) { %>
                     <tr>
                         <td><%= post %></td>
                     </tr>
