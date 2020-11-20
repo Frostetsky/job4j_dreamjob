@@ -1,7 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page import="store.Store" %>
 <%@ page import="model.Post" %>
-<%@ page import="model.Candidate" %>
 <!doctype html>
 <html lang="en">
 <head>
