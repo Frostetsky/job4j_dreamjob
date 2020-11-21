@@ -1,8 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
-<%@ page import="store.Store" %>
 <%@ page import="model.Post" %>
 <%@ page import="java.util.Collection" %>
-<%@ page import="model.Candidate" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -38,16 +37,17 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <% for (Post post : (Collection<Post>) request.getAttribute("posts")) { %>
+                    <jsp:useBean id="posts" scope="request" type="java.util.Collection"/>
+                    <c:forEach items="${posts}" var="post">
                     <tr>
                         <td>
-                            <a href="<%=request.getContextPath()%>/posts/edit.jsp?id=<%=post.getId()%>">
+                            <a href='<c:url value="/posts/edit.jsp?id=${post.id}"/>'>
                                 <i class="fa fa-edit mr-3"></i>
                             </a>
-                            <%=post.getName()%>
+                            <c:out value="${post.name}"/>
                         </td>
                     </tr>
-                    <% } %>
+                    </c:forEach>
                     </tbody>
                 </table>
             </div>

@@ -1,6 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
-<%@ page import="model.Candidate" %>
-<%@ page import="java.util.Collection" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -36,16 +35,17 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <% for (Candidate candidate : (Collection<Candidate>) request.getAttribute("candidates")) { %>
+                    <jsp:useBean id="candidates" scope="request" type="java.util.Collection"/>
+                    <c:forEach items="${candidates}" var="candidate">
                     <tr>
                         <td>
-                            <a href="<%=request.getContextPath()%>/posts/edit.jsp?id=<%=candidate.getId()%>">
+                            <a href='<c:url value="/candidates/edit.jsp?id=${candidate.id}"/>'>
                                 <i class="fa fa-edit mr-3"></i>
                             </a>
-                            <%=candidate.getName()%>
+                            <c:out value="${candidate.name}"/>
                         </td>
                     </tr>
-                    <% } %>
+                    </c:forEach>
                     </tbody>
                 </table>
             </div>
