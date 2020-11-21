@@ -1,6 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page import="store.Store" %>
 <%@ page import="model.Post" %>
+<%@ page import="java.util.Collection" %>
+<%@ page import="model.Candidate" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -36,7 +38,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <% for (Post post : Store.instOf().findAllPosts()) { %>
+                    <% for (Post post : (Collection<Post>) request.getAttribute("posts")) { %>
                     <tr>
                         <td>
                             <a href="<%=request.getContextPath()%>/posts/edit.jsp?id=<%=post.getId()%>">
