@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page import="store.MemStore" %>
 <%@ page import="model.Post" %>
+<%@ page import="store.PsqlStore" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -25,7 +26,7 @@
     String id = request.getParameter("id");
     Post post = new Post(0, "");
     if (id != null) {
-        post = MemStore.instOf().findByIdPost(Integer.parseInt(id));
+        post = PsqlStore.instOf().findByIdPost(Integer.parseInt(id));
     }
 %>
 <div class="container pt-3">
