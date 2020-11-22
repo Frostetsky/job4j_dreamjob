@@ -191,7 +191,7 @@ public class PsqlStore implements Store {
                 candidate.setName(set.getString("name"));
             }
         } catch (SQLException e) {
-            LOG.error("Error in findByIdCandidateMethod");
+            LOG.error("Error in findByIdCandidateMethod", e);
         }
         return candidate;
     }
