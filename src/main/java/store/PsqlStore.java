@@ -3,6 +3,8 @@ package store;
 import org.apache.commons.dbcp2.BasicDataSource;
 import model.Candidate;
 import model.Post;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -10,12 +12,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 
 public class PsqlStore implements Store {
+
+    private static final Logger LOG = LoggerFactory.getLogger(PsqlStore.class.getName());
+
 
     private final BasicDataSource pool = new BasicDataSource();
 
@@ -52,7 +54,7 @@ public class PsqlStore implements Store {
 
     @Override
     public Collection<Post> findAllPosts() {
-        List<Post> posts = new ArrayList<>();
+        List<Post> posts = new LinkedList<>();
         try (Connection cn = pool.getConnection();
              PreparedStatement ps =  cn.prepareStatement("SELECT * FROM dreamjob.public.post")
         ) {
@@ -62,14 +64,14 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error("Error in findAllPosts method", e);
         }
         return posts;
     }
 
     @Override
     public Collection<Candidate> findAllCandidates() {
-        List<Candidate> candidates = new ArrayList<>();
+        List<Candidate> candidates = new LinkedList<>();
         try (Connection cn = pool.getConnection();
              PreparedStatement ps =  cn.prepareStatement("SELECT * FROM dreamjob.public.candidate")
         ) {
@@ -79,7 +81,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error("Error in findAllCandidate method", e);
         }
         return candidates;
     }
@@ -115,7 +117,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error("Error in createPost method", e);
         }
     }
 
@@ -132,7 +134,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error("Error in createCandidate method", e);
         }
     }
 
@@ -144,7 +146,7 @@ public class PsqlStore implements Store {
             ps.setInt(2, post.getId());
             ps.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.error("Error in updatePost method", e);
         }
     }
 
@@ -156,7 +158,7 @@ public class PsqlStore implements Store {
             ps.setInt(2, candidate.getId());
             ps.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.error("Error in updateCandidate method", e);
         }
     }
 
@@ -167,12 +169,12 @@ public class PsqlStore implements Store {
              PreparedStatement ps = cn.prepareStatement("SELECT * FROM dreamjob.public.post WHERE ID = ?")) {
             ps.setInt(1, id);
             ResultSet set = ps.executeQuery();
-            while (set.next()) {
+            if (set.next()) {
                 post.setId(id);
                 post.setName(set.getString("name"));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.error("Error in findByIdPost method", e);
         }
         return post;
     }
@@ -184,12 +186,12 @@ public class PsqlStore implements Store {
              PreparedStatement ps = cn.prepareStatement("SELECT * FROM dreamjob.public.candidate WHERE ID = ?")) {
             ps.setInt(1, id);
             ResultSet set = ps.executeQuery();
-            while (set.next()) {
+            if (set.next()) {
                 candidate.setId(id);
                 candidate.setName(set.getString("name"));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.error("Error in findByIdCandidateMethod");
         }
         return candidate;
     }
