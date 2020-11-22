@@ -1,7 +1,7 @@
 package servlet;
 
 import model.Post;
-import store.Store;
+import store.MemStore;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -11,11 +11,11 @@ import java.io.IOException;
 
 public class PostServlet extends HttpServlet {
 
-    private static final Store store = Store.instOf();
+    private static final MemStore MEM_STORE = MemStore.instOf();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("posts", store.findAllPosts());
+        req.setAttribute("posts", MEM_STORE.findAllPosts());
         req.getRequestDispatcher("posts/posts.jsp").forward(req, resp);
     }
 
@@ -23,7 +23,7 @@ public class PostServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
-        store.savePost(
+        MEM_STORE.savePost(
                 new Post(
                         Integer.parseInt(req.getParameter("id")),
                         req.getParameter("name")

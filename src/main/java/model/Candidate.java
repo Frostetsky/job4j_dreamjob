@@ -11,6 +11,9 @@ public class Candidate {
         this.name = name;
     }
 
+    public Candidate() {
+    }
+
     public int getId() {
         return id;
     }

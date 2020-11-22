@@ -5,7 +5,7 @@ import org.junit.Test;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
-public class StoreTest {
+public class MemStoreTest {
     @Test
     public void betaTest() {
         String text = "abc";
